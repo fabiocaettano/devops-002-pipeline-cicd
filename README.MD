@@ -250,6 +250,22 @@ Deletar aplicação no Cluster, pois no proximo passo a Pipeline CI/CD que irá 
 kubectl delete -f ./k8s/ -R
 ```
 
+## Configurar o git
+
+Criar o repositório "kubedev-pedelogo-catalogo" no conta git.
+
+Configurar o git:
+
+``` cli
+git init
+git add .
+git commit -m "first commit"
+git branch -M master
+git remote add origin https://github.com/fabiocaettano/kubedev-pedelogo-catalogo.git
+git push -u origin master
+
+```
+
 
 ## Configurando a Pipeline
 
@@ -259,3 +275,32 @@ Em Pipeline, no campo "Definition" e selecionar "Pipeline Script From SCM" >> No
 
 No campo Script Path informar Jekinsfile e clicar em "Salvar".
 
+
+Criando o arquivo Jekinsfile para teste:
+
+``` jekins
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Teste') {
+            steps {
+                echo 'Teste'
+            }
+        }
+    }
+}
+``` 
+
+Subir alteração para o git:
+
+```
+git add .
+git commit -m "Jekinsfile Teste"
+git push -u origin master
+```
+
+Na página em "Painel de Controle >> pedelogo-catalogo" clicar em "Construir Agora".
+
+Logo abaixo no Histório de Builds, clicar no , e na próxima página clicar em "Console Output"
