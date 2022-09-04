@@ -42,7 +42,7 @@ java -version
 wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
 sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 sudo apt update
-sudo apt install jenkins
+sudo apt install jenkins --yes
 ``` 
 
 Referência: https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-ubuntu-20-04
@@ -52,36 +52,9 @@ Referência: https://www.digitalocean.com/community/tutorials/how-to-install-jen
 Ubuntu 20:
 ```
  curl -fsSL https://get.docker.com | bash
- systemctl status docker
- usermod -aG docker
+ usermod -aG docker jenkins
+systemctl status docker
 ```
-
-Ubuntu 22:
-```
-# Instalar as dependências:
-sudo apt install lsb-release ca-certificates apt-transport-https software-properties-common -y
-
-# Adicionar o repositório Docker no Ubuntu:
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-
-# Adicionar o repositório Docker no Ubuntu:
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-# Atualizar o repositório:
-sudo apt update
-
-# Instalar Docker:
-sudo apt install docker-ce
-
-#Confirar com Y
-
-# Verificar status:
-sudo systemctl status docker
-
-# 
-usermod -aG docker jenkins
-```
-
 
 ## Reinciar o Jenkins:
 
@@ -89,6 +62,20 @@ usermod -aG docker jenkins
 systemctl restart jenkins
 systemctl status jenkins
 ```
+
+## Instalar o Kubectl
+
+```
+curl -LO https://dl.k8s.io/release/v1.25.0/bin/linux/amd64/kubectl
+curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+chmod +x kubectl
+mkdir -p ~/.local/bin/kubectl
+mv ./kubectl ~/.local/bin/kubectl
+kubectl version --client
+```
+
 
 ## Configurar o Jekins com o Kubernetes
 
