@@ -303,4 +303,5 @@ git push -u origin master
 
 Na página em "Painel de Controle >> pedelogo-catalogo" clicar em "Construir Agora".
 
-Logo abaixo no Histório de Builds, clicar no , e na próxima página clicar em "Console Output"
+Logo abaixo no Histório de Builds clicar no que está em processamento , e na próxima página clicar em "Console Output", observe que a palavra Teste será exibida no OutPut.
+
