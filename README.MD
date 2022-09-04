@@ -47,7 +47,7 @@ sudo apt install jenkins --yes
 
 Referência: https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-ubuntu-20-04
 
-## Instalar o Docker:
+## Instalar o Dockerr:
 
 Ubuntu 20:
 ```
