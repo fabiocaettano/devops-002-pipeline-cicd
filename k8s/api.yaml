@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  selector:
+    matchLabels:
+      app: api
+  template: 
+    metadata:          
+      labels:
+        app: api
+    spec:            
+      containers:
+      - name: api
+        image: fabiocaettano74/api-produto:teste
+        ports:
+        - containerPort: 80        
+        resources: {}
+        env:
+          - name: Mongo__User
+            value: mongouser
+          - name: Mongo__Password
+            value: mongopwd
+          - name: Mongo__Host
+            value: mongo-service
+          - name: Mongo__DataBase
+            value: admin
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+spec:
+  selector:
+    app: api
+  ports:
+  - port: 80
+    targetPort: 80
+  type: LoadBalancer
